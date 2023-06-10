@@ -4,8 +4,6 @@ COPY pyproject.toml poetry.lock /app/
 WORKDIR /app
 RUN pip install poetry && \
     poetry install --no-root
-#RUN pip install sqlite3
-#RUN pip install django
 COPY . /app
 RUN pip install -r /app/requirements.txt
 
