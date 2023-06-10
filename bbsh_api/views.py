@@ -256,8 +256,8 @@ def show_all_orders(request, staff_id) -> JsonResponse:
 def get_user_info(request, staff_id) -> JsonResponse:
     if resp := validate_user(request, staff_id, True):
         return resp
-    attrs = json.loads(request.body)
-    user = MyUser.objects.get(id=attrs["user_id"])
+    user_id = request.GET["user_id"]
+    user = MyUser.objects.get(id=user_id)
     info = user.to_dict()
     info["total_orders"] = count_orders(user.id)
     return JsonResponse(info)
@@ -314,7 +314,7 @@ def show_all_history(request, staff_id) -> JsonResponse:
 def get_order_info(request, user_id):
     if resp := validate_user(request, user_id, False):
         return resp
-    attrs = json.loads(request.body)
-    order = OrderList.objects.filter(Q(user_id=user_id) & Q(order_id=attrs["order_id"]))
+    order_id = request.GET["order_id"]
+    order = OrderList.objects.filter(Q(user_id=user_id) & Q(order_id=order_id))
     res = [record.to_dict() for record in order]
     return JsonResponse(res, safe=False)
