@@ -5,4 +5,4 @@
 /.pytest_cache/
 /db.sqlite3
 /bbsh_api/.pytest_cache/
-/bbsh_api/.mypy_cache/
+/bbsh_api/.mypy_cachase/

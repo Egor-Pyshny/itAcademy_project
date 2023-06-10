@@ -298,6 +298,7 @@ def ready_order(request, staff_id) -> JsonResponse:
     return JsonResponse(True, safe=False)
 
 
+
 @csrf_exempt
 @error_handler
 @require_http_methods(["GET"])
