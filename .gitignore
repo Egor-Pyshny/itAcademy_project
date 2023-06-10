@@ -1,0 +1,6 @@
+# Project exclude paths
+/venv/
+/.idea/
+/.mypy_cache/
+/.pytest_cache/
+/db.sqlite3
