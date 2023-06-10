@@ -4,7 +4,8 @@
 - poetry: pip install poetry
 - Docker: https://docs.docker.com/desktop/install/windows-install/
 - Task: https://taskfile.dev/installation/
-установить необходимые библиотеки можно с помощью любой из команд:
+
+Установить необходимые библиотеки можно с помощью любой из команд:
 - task set-up
 - pip install -r requirements.txt
 - poetry install
