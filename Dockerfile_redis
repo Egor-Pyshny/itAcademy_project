@@ -1,0 +1,10 @@
+FROM redis:7.2-rc-alpine3.18
+
+HEALTHCHECK \
+    --interval=15s \
+    --retries=6 \
+    --start-period=6s \
+    --timeout=6s \
+    CMD redis-cli --raw incr healthcheck-ping || exit 1
+
+

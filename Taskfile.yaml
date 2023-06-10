@@ -1,0 +1,91 @@
+version: '3'
+
+output: 'prefixed'
+
+tasks:
+
+  run-celery:
+    cmds:
+      - docker compose down
+      - docker compose build
+      - docker compose up broker
+      - docker compose up beat
+    desc: start redis & celery
+
+  code-format:
+    cmds:
+      - >
+        poetry run autoflake
+        --exclude '*.idea*'
+        --exclude '*.mypy_cache*'
+        --exclude '*venv*'
+        --expand-star-imports
+        --in-place
+        --recursive
+        --remove-all-unused-imports
+        --remove-duplicate-keys
+        --remove-unused-variables
+        --verbose
+        .
+      - poetry run black .
+    desc: format code with black & isort
+    dir: "."
+
+  code-lint:
+    cmds:
+      - task: code-format
+      - >
+        poetry run autoflake
+        --exclude '*.local*'
+        --expand-star-imports
+        --in-place
+        --recursive
+        --remove-all-unused-imports
+        --remove-duplicate-keys
+        --remove-unused-variables
+        --verbose
+        .
+      - poetry run isort .
+      - poetry run black .
+      - poetry run black --check .
+      - poetry run isort --check-only .
+      - poetry run flake8 ./bbsh_api/ ./djangoProject/ ./services/
+    desc: sequentially applies linters
+
+  db-migrate:
+    cmds:
+      - >
+        poetry run
+        python manage.py migrate
+    desc: migrate DB
+    dir: "."
+    run: once
+
+  db-migrate-dev:
+    cmds:
+      - >
+        poetry run
+        python manage.py makemigrations
+      - task: code-format
+      - task: db-migrate
+    desc: align DB with code (for dev only!)
+    dir: "."
+    run: once
+
+  set-up:
+    cmds:
+      - poetry install
+    desc: install all necessary packages
+    dir: "."
+    run: once
+
+  run-server:
+    cmds:
+      - >
+        poetry run
+        python manage.py runserver
+      - task: run-celery
+    desc: start server(first run task set-up)
+    dir: "."
+    run: once
+

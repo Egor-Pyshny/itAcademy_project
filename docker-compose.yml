@@ -1,0 +1,30 @@
+version: '3.9'
+
+services:
+
+  broker:
+    build:
+      context: .
+      dockerfile: Dockerfile_redis
+    container_name: m63.broker
+    expose:
+      - "6379"
+    init: true
+    networks:
+      - m63
+
+  beat:
+    build:
+      context: .
+      dockerfile: Dockerfile_celery
+    container_name: m63.beat
+    init: true
+    volumes:
+      - ./db.sqlite3:/app/db.sqlite3
+    networks:
+      - m63
+
+networks:
+  m63:
+    name: m63.local
+    driver: bridge
