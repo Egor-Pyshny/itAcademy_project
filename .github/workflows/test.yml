@@ -1,0 +1,15 @@
+name: Services - Periodic
+
+on:
+  pull_request:
+  push:
+  workflow_dispatch:
+
+
+jobs:
+  build-and-test:
+    name: 🤟️Project is healthy.
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🐍 Python is set up.
+        run: echo "nice"
