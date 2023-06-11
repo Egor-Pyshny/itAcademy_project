@@ -84,6 +84,7 @@ tasks:
       - >
         poetry run
         python manage.py runserver
+      - task: db-migrate
       - task: run-celery
     desc: start server(first run task set-up)
     dir: "."
