@@ -19,9 +19,15 @@ jobs:
           curl https://pyenv.run | bash
           eval "$(pyenv init --path)"
 
+      - name: Install venv
+        run: |
+          pyenv install --skip-existing 3.10.9
+          pip install --upgrade pip
+          pip install poetry
+          poetry install
+
       - name: Developer toolchain is set.
-        run: task setup-toolchain
-          poetry env info
+        run: poetry env info
         working-directory: .
 
   linters:
