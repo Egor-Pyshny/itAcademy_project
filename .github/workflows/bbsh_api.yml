@@ -25,14 +25,6 @@ jobs:
         run: |
           echo "${GITHUB_WORKSPACE}/.github/bin" >> ${GITHUB_PATH}
 
-      - name: Toolchain is cached and restored.
-        id: cache-toolchain
-        uses: actions/cache@v3
-        with:
-          key: ${{ steps.cache-key.outputs.value }}
-          path: |
-            .local
-
       - name: Install venv
         run: |
           pip install --upgrade pip
