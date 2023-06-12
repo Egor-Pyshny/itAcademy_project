@@ -1,0 +1,114 @@
+name: BBSH - API
+
+on:
+  push:
+  workflow_dispatch:
+
+
+jobs:
+  health_check:
+    name: Health check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Code is pulled from repo.
+        uses: actions/checkout@v3
+
+      - name: Set up Python 3.10.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.10.9
+
+      - name: Install env
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Install cURL
+        run: sudo apt-get install -y curl
+
+      - name: Run server
+        run: python manage.py runserver &
+
+      - name: Check Server Health
+        run: |
+          response=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8000/bbsh_api/livez/)
+          if [[ $response -eq 200 ]]; then
+            echo "Server is running successfully."
+          else
+            echo "Server is not responding. Status code: $response"
+            exit 1
+          fi
+
+      - name: Stop server
+        run: |
+          pid=$(pgrep -f "python manage.py runserver")
+          if [ -n "$pid" ]; then
+            kill $pid
+          fi
+
+  linters:
+    name:  Start linters.
+    needs:
+      - health_check
+    runs-on: ubuntu-latest
+    outputs:
+      cache-key: ${{ steps.cache-key.outputs.value }}
+
+    steps:
+      - name: Code is pulled from repo.
+        uses: actions/checkout@v3
+
+      - name: Set up Python 3.10.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.10.9
+
+      - name: Task is installed
+        run: |
+          echo "${GITHUB_WORKSPACE}/.github/bin" >> ${GITHUB_PATH}
+          chmod +x .github/bin/task
+
+      - name: Install env
+        run: |
+          pip install --upgrade pip
+          pip install poetry
+          poetry install
+
+      - name: Start linters.
+        run: task code-lint
+        working-directory: .
+
+  run_tests:
+    name: Run Tests
+    needs:
+      - health_check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Code is pulled from repo.
+        uses: actions/checkout@v3
+
+      - name: Set up Python 3.10.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.10.9
+
+      - name: Install env
+        run: |
+          pip install --upgrade pip
+          pip install poetry
+          poetry install
+
+      - name: Run server
+        run: python manage.py runserver &
+
+      - name: Run Tests
+        run: poetry run pytest
+
+      - name: Stop server
+        run: |
+          pid=$(pgrep -f "python manage.py runserver")
+          if [ -n "$pid" ]; then
+            kill $pid
+          fi

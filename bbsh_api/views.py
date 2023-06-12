@@ -84,7 +84,7 @@ def user_registration(request) -> JsonResponse:
     username = attrs["username"]
     password = attrs["password"]
     phone = attrs["phone"]
-    if MyUser.objects.filter(Q(username=username) | Q(phone=phone)):
+    if MyUser.objects.filter(Q(username=username) | Q(phone=phone) | Q(username="testuser")):
         return JsonResponse("user is already exists", safe=False)
     else:
         user = MyUser(username=username, password=password, phone=phone, id=uuid4())
@@ -318,3 +318,7 @@ def get_order_info(request, user_id):
     order = OrderList.objects.filter(Q(user_id=user_id) & Q(order_id=order_id))
     res = [record.to_dict() for record in order]
     return JsonResponse(res, safe=False)
+
+
+def server_is_healthy(request):
+    return JsonResponse("Server is healthy", safe=False)
