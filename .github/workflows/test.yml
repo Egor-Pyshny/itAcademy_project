@@ -16,8 +16,8 @@ jobs:
 
       - name: Pyenv is installed.
         run: |
-          echo "$(pyenv root)/shims" >> ${GITHUB_PATH}
-          pyenv rehash
+          curl https://pyenv.run | bash
+          eval "$(pyenv init --path)"
 
       - name: Developer toolchain is set.
         run: task setup-toolchain
