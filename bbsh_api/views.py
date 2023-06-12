@@ -318,3 +318,7 @@ def get_order_info(request, user_id):
     order = OrderList.objects.filter(Q(user_id=user_id) & Q(order_id=order_id))
     res = [record.to_dict() for record in order]
     return JsonResponse(res, safe=False)
+
+
+def server_is_healthy(request):
+    return JsonResponse("Server is healthy", safe=False)

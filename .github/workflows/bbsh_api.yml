@@ -36,3 +36,22 @@ jobs:
         run: task code-lint
         working-directory: .
 
+    test:
+      runs-on: ubuntu-latest
+
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
+
+        - name: Install cURL
+          run: sudo apt-get install -y curl
+
+        - name: Check Server Health
+          run: |
+            response=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8000/bbsh_api/livez/)
+            if [[ $response -eq 200 ]]; then
+              echo "Server is running successfully."
+            else
+              echo "Server is not responding. Status code: $response"
+              exit 1
+            fi
