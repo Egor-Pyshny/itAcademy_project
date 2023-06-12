@@ -40,6 +40,7 @@ jobs:
 
       - name: Start linters.
         run: |
+          poetry env info
           poetry run black --check .
           poetry run isort --check-only .
           poetry run flake8 ./bbsh_api/ ./djangoProject/ ./services/
