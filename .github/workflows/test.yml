@@ -19,6 +19,14 @@ jobs:
         with:
           python-version: 3.10.9
 
+      - name: Toolchain is cached and restored.
+        id: cache-toolchain
+        uses: actions/cache@v3
+        with:
+          key: ${{ steps.cache-key.outputs.value }}
+          path: |
+            .local
+
       - name: Install venv
         run: |
           pip install --upgrade pip
@@ -27,7 +35,6 @@ jobs:
 
       - name: Start linters.
         run: |
-          poetry env info
           poetry run black --check .
           poetry run isort --check-only .
           poetry run flake8 ./bbsh_api/ ./djangoProject/ ./services/
@@ -41,6 +48,15 @@ jobs:
     steps:
       - name: Code is pulled from repo.
         uses: actions/checkout@v3
+
+      - name: Toolchain is restored from cache.
+        id: restore-toolchain
+        uses: actions/cache@v3
+        with:
+          fail-on-cache-miss: true
+          key: ${{ needs.toolchain.outputs.cache-key }}
+          path: |
+            .local
 
       - name: Start linters.
         run: |
