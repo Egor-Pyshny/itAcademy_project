@@ -42,7 +42,7 @@ jobs:
         run: sudo apt-get install -y curl
 
       - name: test
-        run: python manage.py runserver --noinput
+        run: poetry run python manage.py runserver
 
       - name: Check Server Health
         run: |
