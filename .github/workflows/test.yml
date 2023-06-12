@@ -25,22 +25,6 @@ jobs:
           pip install poetry
           poetry install
 
-      - name: 🛂 Checkpoint.
-        run: |
-          echo ${PATH}
-          echo "# ~~~~ task ~~~~"
-          which task
-          task --version
-          echo "# ~~~~ pyenv ~~~~"
-          which pyenv
-          pyenv --version
-          echo "# ~~~~ python ~~~~"
-          which python
-          python --version
-          echo "# ~~~~ shims ~~~~"
-          echo "$(pyenv root)/shims"
-          ls -la "$(pyenv root)/shims"
-
       - name: Developer toolchain is set.
         run: poetry env info
         working-directory: .
