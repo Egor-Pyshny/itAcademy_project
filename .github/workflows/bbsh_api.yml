@@ -21,6 +21,9 @@ jobs:
         with:
           python-version: 3.10.9
 
+      - name: dsf
+        run: chmod +x .github/bin/task
+
       - name: Task is installed
         run: |
           echo "${GITHUB_WORKSPACE}/.github/bin" >> ${GITHUB_PATH}
