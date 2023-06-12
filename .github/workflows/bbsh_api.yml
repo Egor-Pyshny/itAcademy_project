@@ -1,4 +1,4 @@
-name: Services - Periodic
+name: BBSH - API
 
 on:
   pull_request:
@@ -7,8 +7,8 @@ on:
 
 
 jobs:
-  toolchain:
-    name:  ️Toolchain is built.
+  linters:
+    name:  Start linters.
     runs-on: ubuntu-latest
     outputs:
       cache-key: ${{ steps.cache-key.outputs.value }}
@@ -21,21 +21,12 @@ jobs:
         with:
           python-version: 3.10.9
 
-      - name: dsf
-        run: chmod +x .github/bin/task
-
       - name: Task is installed
         run: |
           echo "${GITHUB_WORKSPACE}/.github/bin" >> ${GITHUB_PATH}
+          chmod +x .github/bin/task
 
-      - name: Check.
-        run: |
-          echo ${PATH}
-          echo "# ~~~~ task ~~~~"
-          which task
-          task --version
-
-      - name: Install venv
+      - name: Install env
         run: |
           pip install --upgrade pip
           pip install poetry
@@ -45,28 +36,3 @@ jobs:
         run: task code-lint
         working-directory: .
 
-  linters:
-    name: Linters approve code.
-    needs:
-      - toolchain
-    runs-on: ubuntu-latest
-    steps:
-      - name: Code is pulled from repo.
-        uses: actions/checkout@v3
-
-      - name: Toolchain is restored from cache.
-        id: restore-toolchain
-        uses: actions/cache@v3
-        with:
-          fail-on-cache-miss: true
-          key: ${{ needs.toolchain.outputs.cache-key }}
-          path: |
-            .local
-
-      - name: Start linters.
-        run: |
-          poetry env info
-          poetry run black --check .
-          poetry run isort --check-only .
-          poetry run flake8 ./bbsh_api/ ./djangoProject/ ./services/
-        working-directory: .

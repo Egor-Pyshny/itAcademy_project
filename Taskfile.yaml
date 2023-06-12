@@ -77,3 +77,11 @@ tasks:
     dir: "."
     run: once
 
+  run-tests:
+    cmds:
+      - python manage.py runserver
+      - poetry run pytest
+    desc: run tests
+    run: once
+
+
