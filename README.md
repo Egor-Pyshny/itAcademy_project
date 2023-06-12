@@ -7,7 +7,6 @@
 
 Установить необходимые библиотеки можно с помощью любой из команд:
 - task set-up
-- pip install -r requirements.txt
 - poetry install
 
 Запустить проект можно с помощью task run-server
