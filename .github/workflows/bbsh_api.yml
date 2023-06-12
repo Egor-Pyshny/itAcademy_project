@@ -37,7 +37,7 @@ jobs:
         run: task code-lint
         working-directory: .
 
-  health check:
+  health_check:
     name: Health check
     runs-on: ubuntu-latest
 
