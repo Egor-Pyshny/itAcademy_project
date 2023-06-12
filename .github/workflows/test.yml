@@ -14,6 +14,11 @@ jobs:
       - name: Code is pulled from repo.
         uses: actions/checkout@v3
 
+      - name: Set up Python 3.10.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.10.9
+
       - name: Pyenv is installed.
         run: |
           curl https://pyenv.run | bash
