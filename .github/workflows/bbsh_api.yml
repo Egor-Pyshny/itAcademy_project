@@ -21,6 +21,10 @@ jobs:
         with:
           python-version: 3.10.9
 
+      - name: Task is installed
+        run: |
+          echo "${GITHUB_WORKSPACE}/.github/bin" >> ${GITHUB_PATH}
+
       - name: Toolchain is cached and restored.
         id: cache-toolchain
         uses: actions/cache@v3
@@ -36,10 +40,7 @@ jobs:
           poetry install
 
       - name: Start linters.
-        run: |
-          poetry run black --check .
-          poetry run isort --check-only .
-          poetry run flake8 ./bbsh_api/ ./djangoProject/ ./services/
+        run: task code-lint
         working-directory: .
 
   linters:
