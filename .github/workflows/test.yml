@@ -10,6 +10,8 @@ jobs:
   toolchain:
     name:  ️Toolchain is built.
     runs-on: ubuntu-latest
+    outputs:
+      cache-key: ${{ steps.cache-key.outputs.value }}
     steps:
       - name: Code is pulled from repo.
         uses: actions/checkout@v3
