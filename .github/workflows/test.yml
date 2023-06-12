@@ -7,9 +7,32 @@ on:
 
 
 jobs:
-  build-and-test:
-    name: 🤟️Project is healthy.
+  toolchain:
+    name:  ️Toolchain is built.
     runs-on: ubuntu-latest
     steps:
-      - name: 🐍 Python is set up.
-        run: echo "nice"
+      - name: Code is pulled from repo.
+        uses: actions/checkout@v3
+
+      - name: Pyenv is installed.
+        run: |
+          echo "$(pyenv root)/shims" >> ${GITHUB_PATH}
+          pyenv rehash
+
+      - name: Developer toolchain is set.
+        run: task setup-toolchain
+          poetry env info
+        working-directory: .
+
+  linters:
+    name: Linters approve code.
+    needs:
+      - toolchain
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code is pulled from repo.
+        uses: actions/checkout@v3
+
+      - name: Start linters.
+        run: task code-lint
+        working-directory: .

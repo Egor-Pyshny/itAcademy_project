@@ -28,25 +28,12 @@ tasks:
         --verbose
         .
       - poetry run black .
+      - poetry run isort .
     desc: format code with black & isort
     dir: "."
 
   code-lint:
     cmds:
-      - task: code-format
-      - >
-        poetry run autoflake
-        --exclude '*.local*'
-        --expand-star-imports
-        --in-place
-        --recursive
-        --remove-all-unused-imports
-        --remove-duplicate-keys
-        --remove-unused-variables
-        --verbose
-        .
-      - poetry run isort .
-      - poetry run black .
       - poetry run black --check .
       - poetry run isort --check-only .
       - poetry run flake8 ./bbsh_api/ ./djangoProject/ ./services/
