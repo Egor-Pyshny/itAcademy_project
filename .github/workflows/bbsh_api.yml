@@ -25,6 +25,13 @@ jobs:
         run: |
           echo "${GITHUB_WORKSPACE}/.github/bin" >> ${GITHUB_PATH}
 
+      - name: Check.
+        run: |
+          echo ${PATH}
+          echo "# ~~~~ task ~~~~"
+          which task
+          task --version
+
       - name: Install venv
         run: |
           pip install --upgrade pip
