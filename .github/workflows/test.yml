@@ -26,7 +26,6 @@ jobs:
 
       - name: Install venv
         run: |
-          pyenv install 3.10.9
           pip install --upgrade pip
           pip install poetry
           poetry install
