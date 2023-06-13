@@ -22,13 +22,14 @@ jobs:
       - name: Install env
         run: |
           pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install poetry
+          poetry install
 
       - name: Install cURL
         run: sudo apt-get install -y curl
 
       - name: Run server
-        run: python manage.py runserver &
+        run: poetry run python manage.py runserver &
 
       - name: Check Server Health
         run: |
