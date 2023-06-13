@@ -6,7 +6,7 @@ from httpx import Client
 base_url = "http://localhost:8000/bbsh_api"
 
 
-def test_health():
+def test_menu():
     with Client() as client:
         resp = client.get(url=f"{base_url}/menu/")
     assert resp.status_code == 200
