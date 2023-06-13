@@ -98,9 +98,10 @@ jobs:
         run: |
           pip install --upgrade pip
           pip install -r requirements.txt
+          poetry install
 
       - name: Run server
-        run: python manage.py runserver &
+        run: poetry run python manage.py runserver &
 
       - name: Run Tests
         run: poetry run pytest
