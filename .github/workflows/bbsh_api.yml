@@ -108,7 +108,8 @@ jobs:
         run: |
           ls
           poetry run python manage.py migrate
-          ls
+          ls ../../../db.sqlite3
+          ls ../../db.sqlite3
           poetry run pytest
 
       - name: Stop server
