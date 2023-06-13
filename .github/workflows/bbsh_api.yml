@@ -107,8 +107,6 @@ jobs:
       - name: Run Tests
         run: |
           ls
-          cd bbsh_api/tests/
-          ls
           poetry run python manage.py migrate
           ls ../../db.sqlite3
           poetry run pytest
