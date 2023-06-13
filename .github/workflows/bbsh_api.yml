@@ -108,6 +108,7 @@ jobs:
         run: |
           ls
           poetry run python manage.py migrate
+          ls
           poetry run pytest
 
       - name: Stop server
