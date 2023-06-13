@@ -1,7 +1,7 @@
 import json
 import uuid
 
-from httpx import get, Client
+from httpx import Client
 
 base_url = "http://localhost:8000/bbsh_api"
 
@@ -22,22 +22,20 @@ def check_uuid(uuid_str):
 
 def test_user():
     with Client() as client:
-        data = {
-            "username": "testuser",
-            "password": "testpassword",
-            "phone": "00000000"
-        }
+        data = {"username": "testuser", "password": "testpassword", "phone": "00000000"}
         resp = client.put(url=f"{base_url}/registration/", json=data)
         uuid_str = resp.content.decode().replace('"', "")
         assert check_uuid(uuid_str)
         assert resp.status_code == 201
         resp = client.get(url=f"{base_url}/{uuid_str}/profile/")
-        predicted_resp = json.dumps({
-            "username": "testuser",
-            "phone": "00000000",
-            "id": uuid_str,
-            "total orders": 0
-        })
+        predicted_resp = json.dumps(
+            {
+                "username": "testuser",
+                "phone": "00000000",
+                "id": uuid_str,
+                "total orders": 0,
+            }
+        )
         assert predicted_resp in resp.text
         assert resp.status_code == 200
         resp = client.get(url=f"{base_url}/{uuid_str}/basket/")
@@ -46,10 +44,7 @@ def test_user():
         resp = client.get(url=f"{base_url}/{uuid_str}/history/")
         assert "[]" in resp.text
         assert resp.status_code == 200
-        data = {
-            "dish_name": "testposition",
-            "dop_ingredients": []
-        }
+        data = {"dish_name": "testposition", "dop_ingredients": []}
         resp = client.put(url=f"{base_url}/{uuid_str}/basket/add/", json=data)
         assert "true" in resp.text
         assert resp.status_code == 200
@@ -64,7 +59,7 @@ def test_user():
                     "size": "small",
                     "dop_ingredients": "[]",
                     "id": dish_id,
-                    "user_id": uuid_str
+                    "user_id": uuid_str,
                 }
             ]
         )
