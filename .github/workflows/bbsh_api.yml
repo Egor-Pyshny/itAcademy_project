@@ -106,6 +106,7 @@ jobs:
 
       - name: Run Tests
         run: |
+          poetry run python manage.py makemigrations
           poetry run python manage.py migrate
           poetry run pytest
 
