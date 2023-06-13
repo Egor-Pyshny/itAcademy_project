@@ -22,13 +22,14 @@ jobs:
       - name: Install env
         run: |
           pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install poetry
+          poetry install
 
       - name: Install cURL
         run: sudo apt-get install -y curl
 
       - name: Run server
-        run: python manage.py runserver &
+        run: poetry run python manage.py runserver &
 
       - name: Check Server Health
         run: |
@@ -97,14 +98,19 @@ jobs:
       - name: Install env
         run: |
           pip install --upgrade pip
-          pip install poetry
+          pip install -r requirements.txt
           poetry install
 
       - name: Run server
-        run: python manage.py runserver &
+        run: poetry run python manage.py runserver &
 
       - name: Run Tests
-        run: poetry run pytest
+        run: |
+          poetry run python manage.py migrate
+          cd bbsh_api
+          cd tests 
+          ls ../../db.sqlite3
+          poetry run pytest
 
       - name: Stop server
         run: |

@@ -84,7 +84,9 @@ def user_registration(request) -> JsonResponse:
     username = attrs["username"]
     password = attrs["password"]
     phone = attrs["phone"]
-    if MyUser.objects.filter(Q(username=username) | Q(phone=phone) | Q(username="testuser")):
+    if MyUser.objects.filter(
+        Q(username=username) | Q(phone=phone) | Q(username="testuser")
+    ):
         return JsonResponse("user is already exists", safe=False)
     else:
         user = MyUser(username=username, password=password, phone=phone, id=uuid4())
