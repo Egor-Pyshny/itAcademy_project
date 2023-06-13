@@ -21,8 +21,6 @@ jobs:
 
       - name: Install env
         run: |
-          cd bbsh_api
-          cd tests
           pip install --upgrade pip
           pip install poetry
           poetry install
@@ -108,9 +106,9 @@ jobs:
 
       - name: Run Tests
         run: |
+          poetry run python manage.py migrate
           cd bbsh_api
           cd tests
-          poetry run python manage.py migrate
           poetry run pytest
 
       - name: Stop server
