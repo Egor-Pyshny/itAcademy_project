@@ -106,7 +106,8 @@ jobs:
 
       - name: Run Tests
         run: |
-          cd bbsh_api/tests/
+          cd bbsh_api/
+          cd tests/
           poetry run python manage.py migrate
           poetry run pytest
 

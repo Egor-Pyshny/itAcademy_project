@@ -22,7 +22,7 @@ def check_uuid(uuid_str):
 
 
 def test_user():
-    conn = sqlite3.connect("sqlite://../../../db.sqlite3")
+    conn = sqlite3.connect("../../db.sqlite3")
     sql = """
     INSERT INTO bbsh_api_menu (name, cost, size, ingredients)
     VALUES (?, ?, ?, ?)
