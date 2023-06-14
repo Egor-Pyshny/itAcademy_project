@@ -6,7 +6,6 @@ from celery.schedules import crontab
 from django.core.mail import send_mail
 from django.utils.timezone import now, timedelta
 
-
 app = Celery(
     "periodic.m63",
     broker="redis://broker:6379/",
@@ -17,6 +16,7 @@ app.set_default()
 @app.task
 def send_day_statistics():
     from bbsh_api.models import History, MyUser
+
     admin_mail = MyUser.objects.filter(user="admin").email
     today = str(datetime.now().date()) + " 00:00:00"
     res = History.objects.filter(date_time=f"{today}")
@@ -24,9 +24,7 @@ def send_day_statistics():
     for order in res:
         stat = str(order) + "\r\n"
     send_mail(
-        "Statistics for "
-        + str(datetime.now().date()) +
-        stat,
+        "Statistics for " + str(datetime.now().date()) + stat,
         "autosend@mail.ru",
         [admin_mail],
         fail_silently=False,
@@ -36,6 +34,7 @@ def send_day_statistics():
 @app.task
 def clear_order_list():
     from bbsh_api.models import OrderList
+
     OrderList.objects.delete()
     conn = sqlite3.connect("db.sqlite3")
     cursor = conn.cursor()
@@ -46,6 +45,7 @@ def clear_order_list():
 @app.task
 def clear_history_list():
     from bbsh_api.models import History
+
     one_year_ago = now() - timedelta(days=365)
     one_year_ago = str(one_year_ago.date()) + "00:00:00"
     History.objects.filter(date_time=one_year_ago).delete()
