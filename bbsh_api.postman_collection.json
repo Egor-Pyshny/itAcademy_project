@@ -404,7 +404,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"dish_name\":\"testposition\",\r\n    \"dop_ingredients\":[]\r\n}",
+							"raw": "{\r\n    \"dish_name\":\"test1\",\r\n    \"dop_ingredients\":\"[]\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
