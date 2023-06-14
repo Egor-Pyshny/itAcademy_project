@@ -104,23 +104,11 @@
 				},
 				{
 					"name": "get_user_info",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"user_id\": \"18a5b7bbf82543a5b8c8095812c04ab0\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "127.0.0.1:8000/bbsh_api/12345678-1234-5678-1234-567812345678/users/get_user_info/",
+							"raw": "127.0.0.1:8000/bbsh_api/12345678-1234-5678-1234-567812345678/users/get_user_info?user_id=18a5b7bbf82543a5b8c8095812c04ab0",
 							"host": [
 								"127",
 								"0",
@@ -132,8 +120,13 @@
 								"bbsh_api",
 								"12345678-1234-5678-1234-567812345678",
 								"users",
-								"get_user_info",
-								""
+								"get_user_info"
+							],
+							"query": [
+								{
+									"key": "user_id",
+									"value": "18a5b7bbf82543a5b8c8095812c04ab0"
+								}
 							]
 						}
 					},
@@ -180,7 +173,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"order_id\": 1\r\n}",
+							"raw": "{\r\n    \"order_id\": 0\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -277,7 +270,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"test3\", \r\n    \"password\": \"test3\"\r\n}",
+							"raw": "{\r\n    \"username\": \"admin\", \r\n    \"password\": \"admin\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -309,7 +302,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"test3\", \r\n    \"password\": \"test3\",\r\n    \"phone\":\"3333333\"\r\n}",
+							"raw": "{\r\n    \"username\": \"test3\", \r\n    \"password\": \"test3\",\r\n    \"phone\": \"3333333\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -411,7 +404,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"dish_name\":\"test1\",\r\n    \"dop_ingredients\":[]\r\n}",
+							"raw": "{\r\n    \"dish_name\":\"testposition\",\r\n    \"dop_ingredients\":[]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -580,23 +573,11 @@
 				},
 				{
 					"name": "get_order_info",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"order_id\":0\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "127.0.0.1:8000/bbsh_api/12345678-1234-5678-1234-567812345678/order_info/",
+							"raw": "127.0.0.1:8000/bbsh_api/12345678-1234-5678-1234-567812345678/order_info?order_id=0",
 							"host": [
 								"127",
 								"0",
@@ -607,8 +588,13 @@
 							"path": [
 								"bbsh_api",
 								"12345678-1234-5678-1234-567812345678",
-								"order_info",
-								""
+								"order_info"
+							],
+							"query": [
+								{
+									"key": "order_id",
+									"value": "0"
+								}
 							]
 						}
 					},
