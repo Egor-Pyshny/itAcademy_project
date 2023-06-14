@@ -4,6 +4,7 @@ from datetime import datetime
 from celery import Celery
 from celery.schedules import crontab
 from django.core.mail import send_mail
+from django.utils.timezone import now, timedelta
 
 from bbsh_api.models import History, MyUser, OrderList
 
@@ -47,9 +48,9 @@ def clear_order_list():
 
 @app.task
 def clear_history_list():
-    # one_year_ago = timezone.now() - timezone.timedelta(days=365)
-    # one_year_ago = one_year_ago.date()
-    History.objects.delete()
+    one_year_ago = now() - timedelta(days=365)
+    one_year_ago = str(one_year_ago.date()) + "00:00:00"
+    History.objects.filter(date_time=one_year_ago).delete()
 
 
 @app.on_after_configure.connect
