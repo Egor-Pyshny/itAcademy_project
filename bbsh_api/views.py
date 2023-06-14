@@ -167,11 +167,12 @@ def user_basket_add(request, user_id) -> JsonResponse:
     dish_name = attrs["dish_name"]
     dop_ingredients = attrs["dop_ingredients"]
     dish = Menu.objects.get(name=dish_name)
+    order_id = uuid4()
     order = Basket(
-        dish=dish, dop_ingredients=dop_ingredients, user=request.user, id=uuid4()
+        dish=dish, dop_ingredients=dop_ingredients, user=request.user, id=order_id
     )
     order.save()
-    return JsonResponse(True, safe=False)
+    return JsonResponse(order_id, safe=False)
 
 
 @csrf_exempt
