@@ -107,6 +107,8 @@ jobs:
       - name: Run Tests
         run: |
           poetry run python manage.py migrate
+          cd bbsh_api
+          cd tests 
           poetry run pytest
 
       - name: Stop server
