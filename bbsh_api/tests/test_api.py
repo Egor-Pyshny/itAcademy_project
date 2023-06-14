@@ -60,7 +60,8 @@ def test_user():
             assert resp.status_code == 200
             data = {"dish_name": "testposition", "dop_ingredients": []}
             resp = client.put(url=f"{base_url}/{uuid_str}/basket/add/", json=data)
-            assert "true" in resp.text
+            dish_uuid_str = resp.content.decode().replace('"', "")
+            assert check_uuid(dish_uuid_str)
             assert resp.status_code == 200
             resp = client.get(url=f"{base_url}/{uuid_str}/basket/")
             resp_data = json.loads(resp.text)
