@@ -68,20 +68,12 @@ tasks:
 
   run-server:
     cmds:
+      - task: db-migrate
       - >
         poetry run
         python manage.py runserver
-      - task: db-migrate
-      - task: run-celery
     desc: start server(first run task set-up)
     dir: "."
-    run: once
-
-  run-tests:
-    cmds:
-      - python manage.py runserver
-      - poetry run pytest
-    desc: run tests
     run: once
 
 
